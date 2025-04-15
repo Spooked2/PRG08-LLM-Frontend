@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Practice getting fired</title>
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./main.js"></script>
+</head>
+<body>
+
+<header>
+
+    <h1>Practice getting fired!</h1>
+
+    <p>
+        As a mere IT professional, your days of coding are clearly numbered thanks to AI taking your jobs. Why would
+        anyone
+        ever bother writing code that actually works when you can just ask some glorified auto-complete to crap out some
+        code? Clearly, spending thousands of dollars on a ChatGPT subscription is far batter than paying a real person a
+        livable wage! You will get fired eventually, so you might as well soften the blow for yourself. This page allows
+        you
+        to beg an LLM pretending to be your boss for your job, and also provides a joke generator powered by the
+        very
+        same AI to lighten the mood a little.
+    </p>
+
+</header>
+
+<main>
+
+    <section id="jokeGenerator">
+
+        <h2>Generate a funny joke to lighten the mood!</h2>
+
+        <button id="jokeButton">Generate joke</button>
+
+        <p id="jokeContainer">No jokes generated yet...</p>
+
+    </section>
+
+    <section id="gettingFired">
+
+        <div id="chatContainer">
+
+        </div>
+
+        <form action="" method="POST" id="messageForm">
+
+            <div class="inputContainer">
+                <label for="message">Type a new message</label>
+                <input type="text" maxlength="255" id="message" name="message" required>
+            </div>
+
+            <button type="submit">Send</button>
+
+        </form>
+
+    </section>
+
+</main>
+
+</body>
+</html>
