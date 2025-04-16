@@ -57,6 +57,45 @@
 
     </section>
 
+    <section id="scp-914">
+
+        <h1>Generate an scp-914 log</h1>
+
+        <form action="" id="scp-914Form" method="POST">
+
+            <div class="inputContainer">
+
+                <label for="inputMaterials">Input materials:</label>
+                <input type="text" id="inputMaterials" name="inputMaterials">
+
+            </div>
+
+            <div class="inputContainer">
+
+                <label for="setting">Select a setting</label>
+
+                <select name="setting" id="setting">
+
+                    <option value="rough">Rough</option>
+                    <option value="coarse">Coarse</option>
+                    <option value="1:1" selected>1:1</option>
+                    <option value="fine">Fine</option>
+                    <option value="very fine">Very fine</option>
+
+                </select>
+
+            </div>
+
+            <button type="submit">Turn the key</button>
+
+        </form>
+
+        <div id="scpResultContainer">
+
+        </div>
+
+    </section>
+
 </main>
 
 </body>

@@ -10,6 +10,8 @@ let jokeContainer;
 let messageForm;
 let messageInputElement;
 let chatHistory = [];
+let scpForm;
+let scpResultContainer;
 
 //Functions
 function init() {
@@ -19,12 +21,18 @@ function init() {
     jokeContainer = document.getElementById('jokeContainer');
     messageForm = document.getElementById('messageForm');
     messageInputElement = document.getElementById('message');
+    scpForm = document.getElementById('scp-914Form');
+    scpResultContainer = document.getElementById('scpResultContainer');
 
     //Add an event to the message form so it can do stuff
     messageForm.addEventListener('submit', submitHandler);
 
     //Add an event listener to the joke button
     document.getElementById('jokeButton').addEventListener('click', generateJoke);
+
+    //Add an event listener to the scp form
+    scpForm.addEventListener('submit', scpHandler);
+
 
 }
 
@@ -46,7 +54,7 @@ async function submitHandler(e) {
         history: chatHistory
     }
 
-    const reply = await genericFetch('POST', body);
+    const reply = await genericFetch('POST', body, apiUrl, handleStream);
 
     chatHistory.push(['human', prompt]);
     chatHistory.push(['ai', reply]);
@@ -64,7 +72,7 @@ async function generateJoke(e) {
 
 }
 
-async function genericFetch(method, body = null) {
+async function genericFetch(method, body = null, url = apiUrl, streamHandler ) {
 
     const fetchOptions = {
         method: method,
@@ -80,11 +88,11 @@ async function genericFetch(method, body = null) {
 
     try {
 
-        const res = await fetch(apiUrl, fetchOptions);
+        const res = await fetch(url, fetchOptions);
 
         if (method === 'POST') {
 
-            return await handleStream(res);
+            return await streamHandler(res);
 
         }
 
@@ -134,5 +142,37 @@ function createMessageElement(sender) {
     chatContainer.appendChild(messageElement);
 
     return messageElement;
+
+}
+
+async function scpHandler(e) {
+
+    //Prevent the form from actually getting posted
+    e.preventDefault();
+
+    const formData = new FormData(scpForm);
+    const input = formData.get('inputMaterials');
+    const setting = formData.get('setting');
+
+    const body = {input, setting};
+
+    await genericFetch('POST', body, (apiUrl + 'scp'), scpStreamHandler);
+
+}
+
+async function scpStreamHandler(res) {
+
+    const log = document.createElement('p');
+
+    scpResultContainer.innerHTML = '';
+
+    scpResultContainer.appendChild(log);
+
+    const reader = res.body.getReader();
+
+    for await (const chunk of readChunks(reader)) {
+        log.innerText += chunk;
+    }
+
 
 }
