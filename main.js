@@ -12,6 +12,7 @@ let messageInputElement;
 let chatHistory = [];
 let scpForm;
 let scpResultContainer;
+let allowCall = true;
 
 //Functions
 function init() {
@@ -33,13 +34,19 @@ function init() {
     //Add an event listener to the scp form
     scpForm.addEventListener('submit', scpHandler);
 
-
 }
 
 async function submitHandler(e) {
 
     //Make sure the form doesn't actually get posted
     e.preventDefault();
+
+    //Prevent the user from sending another message if the AI is still working
+    if (!allowCall) {
+        return;
+    }
+
+    allowCall = false;
 
     const formData = new FormData(messageForm);
     const prompt = formData.get('message');
@@ -66,13 +73,22 @@ async function generateJoke(e) {
     //Stop it from doing normal button things just in case
     e.preventDefault();
 
+    //Prevent the user from sending another message if the AI is still working
+    if (!allowCall) {
+        return;
+    }
+
+    allowCall = false;
+
     const res = await genericFetch('GET');
+
+    allowCall = true;
 
     jokeContainer.innerText = res.funnyJoke ?? 'No jokes yet...';
 
 }
 
-async function genericFetch(method, body = null, url = apiUrl, streamHandler ) {
+async function genericFetch(method, body = null, url = apiUrl, streamHandler) {
 
     const fetchOptions = {
         method: method,
@@ -131,6 +147,8 @@ async function* readChunks(reader) {
         result = await reader.read();
     }
 
+    allowCall = true;
+
 }
 
 function createMessageElement(sender) {
@@ -149,6 +167,13 @@ async function scpHandler(e) {
 
     //Prevent the form from actually getting posted
     e.preventDefault();
+
+    //Prevent the user from sending another message if the AI is still working
+    if (!allowCall) {
+        return;
+    }
+
+    allowCall = false;
 
     const formData = new FormData(scpForm);
     const input = formData.get('inputMaterials');
