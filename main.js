@@ -4,15 +4,19 @@ window.addEventListener('load', init);
 //Variables
 const apiUrl = 'http://localhost:8008/';
 const decoder = new TextDecoder('utf-8');
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 let chatContainer;
 let jokeContainer;
 let messageForm;
 let messageInputElement;
+let recordButton;
 let chatHistory = [];
 let scpForm;
 let scpResultContainer;
 let allowCall = true;
+let isRecording = false;
+let recorder;
 
 //Functions
 function init() {
@@ -22,11 +26,19 @@ function init() {
     jokeContainer = document.getElementById('jokeContainer');
     messageForm = document.getElementById('messageForm');
     messageInputElement = document.getElementById('message');
+    recordButton = document.getElementById('recordButton');
     scpForm = document.getElementById('scp-914Form');
     scpResultContainer = document.getElementById('scpResultContainer');
 
     //Add an event to the message form so it can do stuff
     messageForm.addEventListener('submit', submitHandler);
+
+    //Add an event listener to the record button only if the browser supports speech to text, otherwise hide it
+    if (SpeechRecognition) {
+        recordButton.addEventListener('click', voiceHandler);
+    } else {
+        recordButton.classList.add('hidden');
+    }
 
     //Add an event listener to the joke button
     document.getElementById('jokeButton').addEventListener('click', generateJoke);
@@ -199,5 +211,38 @@ async function scpStreamHandler(res) {
         log.innerText += chunk;
     }
 
+}
+
+function voiceHandler(e) {
+
+    e.preventDefault();
+
+    if (!isRecording) {
+
+        recordButton.innerText = 'Stop recording';
+
+        recorder = new SpeechRecognition();
+
+        recorder.onresult = inputVoice
+
+        recorder.start();
+
+    } else {
+
+        recorder.stop();
+
+        recorder = null;
+
+        recordButton.innerText = 'Record voice';
+
+    }
+
+    isRecording = !isRecording;
+
+}
+
+function inputVoice(e) {
+
+    messageInputElement.value = e.results[0][0].transcript;
 
 }
