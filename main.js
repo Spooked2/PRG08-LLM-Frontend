@@ -2,7 +2,8 @@
 window.addEventListener('load', init);
 
 //Variables
-const apiUrl = 'http://localhost:8008/';
+// const apiUrl = 'http://localhost:8008/';
+const apiUrl = 'https://probable-dollop-595q7w944rwhv57g-8008.app.github.dev/';
 const decoder = new TextDecoder('utf-8');
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
