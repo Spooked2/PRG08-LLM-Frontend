@@ -12,12 +12,18 @@ let jokeContainer;
 let messageForm;
 let messageInputElement;
 let recordButton;
+let goToScpButton;
+let backButton;
 let chatHistory = [];
 let scpForm;
 let scpResultContainer;
 let allowCall = true;
 let isRecording = false;
 let recorder;
+let header;
+let jokeGenerator;
+let gettingFiredContainer;
+let scpContainer;
 
 //Functions
 function init() {
@@ -25,11 +31,17 @@ function init() {
     //Get all the DOM elements we need
     chatContainer = document.getElementById('chatContainer');
     jokeContainer = document.getElementById('jokeContainer');
+    header = document.getElementById('header');
+    jokeGenerator = document.getElementById('jokeGenerator');
+    gettingFiredContainer = document.getElementById('gettingFired');
+    scpContainer = document.getElementById('scp-914');
     messageForm = document.getElementById('messageForm');
     messageInputElement = document.getElementById('message');
     recordButton = document.getElementById('recordButton');
     scpForm = document.getElementById('scp-914Form');
     scpResultContainer = document.getElementById('scpResultContainer');
+    goToScpButton = document.getElementById('goToScp');
+    backButton = document.getElementById('back');
 
     //Add an event to the message form so it can do stuff
     messageForm.addEventListener('submit', submitHandler);
@@ -46,6 +58,10 @@ function init() {
 
     //Add an event listener to the scp form
     scpForm.addEventListener('submit', scpHandler);
+
+    //Add an event listener to the page switching buttons
+    goToScpButton.addEventListener('click', switchPage);
+    backButton.addEventListener('click', switchPage);
 
 }
 
@@ -245,5 +261,19 @@ function voiceHandler(e) {
 function inputVoice(e) {
 
     messageInputElement.value = e.results[0][0].transcript;
+
+}
+
+function switchPage(e) {
+
+    //Make sure the button only does what we want
+    e.preventDefault();
+
+    //Toggle the hidden class on appropriate containers
+    header.classList.toggle('hidden');
+    jokeGenerator.classList.toggle('hidden');
+    gettingFiredContainer.classList.toggle('hidden');
+    scpContainer.classList.toggle('hidden');
+
 
 }

@@ -74,6 +74,12 @@ main {
     border: solid black 1px;
     border-radius: 6px;
     padding: 1vw;
+
+    >p {
+        max-width: 70%;
+        padding: 0.5vw;
+    }
+
 }
 
 #messageForm {
@@ -100,6 +106,16 @@ main {
         width: 100%;
     }
 
+}
+
+.humanReply {
+    align-self: flex-end;
+    background-color: aquamarine;
+}
+
+.aiReply {
+    align-self: flex-start;
+    background-color: lightgreen;
 }
 
 .hidden {

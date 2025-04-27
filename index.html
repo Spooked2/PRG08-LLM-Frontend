@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<header>
+<header id="header">
 
     <h1>Practice getting fired!</h1>
 
@@ -23,6 +23,12 @@
         very
         same AI to lighten the mood a little.
     </p>
+
+    <p>
+        Also check out the scp-914 log generator!
+    </p>
+
+    <button type="button" id="goToScp">Go to SCP-914 log generator</button>
 
 </header>
 
@@ -39,6 +45,13 @@
     </section>
 
     <section id="gettingFired">
+
+        <h2>Get fired</h2>
+
+        <p>
+            You got called into your boss' office and just arrived.
+            Use the input below the chat box to type or record a message, then hit send.
+        </p>
 
         <div id="chatContainer">
 
@@ -59,9 +72,11 @@
 
     </section>
 
-    <section id="scp-914">
+    <section id="scp-914" class="hidden">
 
         <h1>Generate an scp-914 log</h1>
+
+        <button type="button" id="back">Go back to getting fired</button>
 
         <form action="" id="scp-914Form" method="POST">
 
